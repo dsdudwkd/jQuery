@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
+        </script>
+    <script>
+        /* 
+        메서드 문법
+        매개변수를 사용하지 않는 유형 = $(선택자).메서드명();
+        매개변수를 사용하는 유형 = $(선택자).메서드명(값);
+        매개변수가 여러 개인 경우 = $(선택자).메서드명(값1, 값2,...);
+        매개변수가 객체형일 때 = $(선택자).메서드명({'속성1': 속성1의 값, '속성2':속성2의 값,...});
+
+        선택자 종류
+        자바스크립트와는 다르게 css 문법을 따른다
+
+        태그 선택자: $('태그명');
+        클래스 선택자: $('.클래스명');
+        아이디 선택자: $('#아이디명');
+        구조 선택자: $('선택자:nth-of-type(n)'); //css기반이기 때문에 css규칙에 따라 1번부터 시작
+        자식 선택자: $('선택자 선택자');
+        자손 선택자: $('선택자 > 선택자');
+
+        변수는 자바스크립트와 똑같이 let, const, var 사용
+        */
+
+
+        $(document).ready(function () {
+            /* 
+           제이쿼리는 반복문을 사용하지 않으므로 모든 객체를 기본적으로 다 선택한다
+           스타일은 객체.css({})로 통일한다 = css 문법 그대로 사용
+           */
+            let h1 = $('h1');
+            h1.css({ 'background-color': 'coral' })
+
+            /* 
+            자식 요소 찾는 속성 매개 변수가 없을 경우 모든 태그를 찾으며, 특정한 객체를 찾을 경우 매개변수로 선택자를 넣는다
+            */
+            let list = $('.list');
+            let li = list.children('li'); // = let list = $('.list > li'); = let list = $('.list li');
+
+            /* 
+            eq()는 element queue의 약자로 선택자의 순번을 알려주는 메서드, jQuery 전용 메서드라 순번이 0부터 시작
+            자바스크립트에서는 querySelectorAll()로 찾은 후 선택자[n]으로 찾는 것과 같다
+            */
+            let li2 = li.eq(2);
+            li.css({'color' : 'blue'});
+            li2.css({'background-color': 'pink'});
+            li2.prev().css({'background-color': 'skyblue'}); // prev()는 js에서 previousElementSibling과 같다
+            li2.next().css({'background-color' : 'lime'}); // next()는 js에서 nextElementSibling과 같다
+
+            let parents = $('.parents');
+            // let item = parents.children(); //children()는 직계 자식 요소를 반환, 자손요소를 찾을 때 .children().children()으로 찾을 수 있음
+            let item = parents.find('.child'); // find()는 직계자식을 포함해 자손 요소까지 탐색, 선택자를 반드시 넣어야 필요한 요소 찾을 수 있음
+            item.css({'background-color': 'gray'});
+
+            /* 
+            parent()는 부모 요소를 찾음
+            parents()는 모든 상위 요소를 찾음
+            */
+            let child = $('.child');
+            let parent = child.parent();
+            let parents2 = child.parents();
+            parent.css({'background-color': 'red'});
+            parents2 = child.parents();
+            parents2.css({'background-color' : 'lightgrey'});
+
+            /* 
+            parents()와 closest()의 차이점
+            - parents()는 선택되는 모든 상위요소(부모, 조상)를 모두 선택
+            - closest()는 선택자와 일치하는 조상, 부모 중에서 가장 가까운 요소만 선택
+            */
+            let parent2 = child.closest('.parents');
+            parent2.css({'background-color' : 'green'});
+
+            let child3 = $('.child').eq(2);
+            child3.css({'background-color' : 'coral'})
+            child3.closest('.parents').css({'background-color' : 'yellow'});
+        })
+
+        
+
+    </script>
+</head>
+
+<body>
+    <h1>title</h1>
+    <h1>title</h1>
+    <h1>title</h1>
+    <h1>title</h1>
+    <h1>title</h1>
+
+    <ul class="list">
+        <li>item</li>
+        <li>item</li>
+        <li>item</li>
+        <li>item</li>
+        <li>item</li>
+    </ul>
+    
+    <div class="parents">
+        parents
+        <div class="parent">
+            parent
+            <div class="child">child</div>
+        </div>
+    </div>
+    
+    <div class="parents">
+        parents
+        <div class="parent">
+            parent
+            <div class="child">child</div>
+        </div>
+    </div>
+
+    <div class="parents">
+        parents
+        <div class="parent">
+            parent
+            <div class="child">child</div>
+        </div>
+    </div>
+</body>
+
+</html>

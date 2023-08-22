@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .parent{
+            width: 600px;
+            height: 600px;
+            background-color: coral;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+        .child{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;            
+        }
+        .on{
+            background-color: gray;
+        }
+
+    </style>
+    <script>
+        /* 
+        on(): 여러 개의 이벤트를 줄 때 사용하는 이벤트 메서드(addEventListner의 제이쿼리 버전)
+        이벤트명은 js와 똑같이 공유
+
+        선택자에만 이벤트를 적용(자식 요소는 이벤트를 실행하지 않음, 2순위)
+        mouseover()
+        mouseout()
+
+        자식 요소를 포함하여 이벤트를 적용(1순위)
+        mouseenter()
+        mouseleave()
+        */
+        $(document).ready(function(){
+            $('.parent').on('mouseover', function(){
+                //this는 이벤트를 발생시키는 대상
+                //여러 개의 중복 객체가 있을 때 특정 대상(이벤트가 발생한 대상)을 찾기 위해서 this를 사용한다
+                $(this).addClass('on'); //classList.add()의 제이쿼리 버전
+            });
+            $('.parent').on('mouseleave',function(){
+                $(this).removeClass('on'); //classList.remove()의 제이쿼리 버전
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="parent">
+        <div class="child">child</div>
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
+    </script>
+    <script>
+        
+       $(document).ready(function(){
+
+        /* 
+        객체를 추가하는 메서드
+        appendTo() = a.appendTo(b) b의 마지막 자손 요소로 a를 추가
+        prependTo() = a.prependTo(b) b의 첫 번째 자손 요소로 a를 추가
+
+        insertBefore() = a.insertBefore(b) b의 이전 요소로(형으로) a를 추가
+        insertAfter() = a.insertAfter(b) b의 다음 요소로(동생으로) a를 추가
+
+        append(), prepend(), after(), before()는 뜻은 위와 같지만 선택자와 요소의 순서만 다르다
+        append() = a.append(b) a의 마지막 자손 요소로 b를 추가
+        */
+
+        let list = $('.list');
+        let item = $('<li class="item">hi!</li>'); //객체의 생성, 내가 원하는 위치에 넣을 수 있게 생성(1회용)
+        
+        item.appendTo(list);
+        item.prependTo(list);
+
+        list.append(item);
+        item.insertBefore(list);
+
+        let item2 = list.children().eq(1).clone(); //clone() = 객체의 복제, 1회성
+        item2.insertAfter(list);
+        item2.insertBefore(list);
+        item2.remove(); //remove() = 객체의 삭제
+        list.empty(); //선택된 객체의 하위 요소 삭제
+       })
+    </script>
+</head>
+<body>
+    <ul class="list">
+        <li class="item">item</li>
+        <li class="item item2">item</li>
+        <li class="item">item</li>
+        <li class="item item3">item</li>
+        <li class="item">item</li>
+        <li class="item">item</li>
+    </ul>
+</body>
+</html>

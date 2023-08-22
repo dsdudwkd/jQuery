@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>show()_hide()</title>
+
+  <style>
+  
+  #wrap{
+    width:220px; height:220px; position:absolute; left:50%; margin-left:-110px; top:200px;
+  }
+  
+  #img_wrap{
+			border:1px #000000 solid;
+			width:220px;
+			height:220px;		
+			text-align:center;
+      margin-bottom:20px;
+      box-sizing:border-box; overflow:hidden;              
+					
+	}
+  #navi{
+    width:100%; text-align:left; 
+  }
+  
+  
+  
+  </style>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+  <!--jQuery 소스삽입  cdnjs 플러그인 사용 -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+  <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
+
+ <script>
+  $(document).ready(function(){
+    /* 
+    show()
+    hide(시간(ms), 콜백함수) ms의 단위는 생략, 없어질 때의 모습은 display:block 속성의 특징이라 희미해지게 사라지게 할 순 없다
+    메서드명이 있는 애니메이션의 경우에는 미리 동작이 만들어져 있는 약속어이다
+
+    toggle()은 show와 hide 모두 실행
+    */
+    $('#hide_btn').on('click', onHide);
+    $('#show_btn').on('click', onHide);
+    $('#toggle_btn').on('click', onToggle);
+    function onHide(){
+      $('#img_wrap').hide(1000, alert('숨겨집니다.'));
+      /* $('#img_wrap').hide(1000);
+      alert('숨겨집니다.'); //이럴 경우엔 함수 2개가 동시에 적용됨 */
+
+    }
+    function onShow(){
+      $('#img_wrap').show(1000, alert('보여집니다'));
+
+    }
+
+    function onToggle(){
+      $('#img_wrap').toggle(1000);
+      
+    }
+  })
+ </script>
+
+
+</head>
+<body>
+
+  <div id="wrap">
+    <div id="img_wrap">
+      <img id="img1" src="images/img1.jpg">
+    </div>
+    
+    <div id="navi">
+      <button id="show_btn">show</button>
+      <button id="hide_btn">hide</button>
+      <button id="toggle_btn">toggle</button>
+    </div>
+
+  </div>
+  
+</body>
+</html>
