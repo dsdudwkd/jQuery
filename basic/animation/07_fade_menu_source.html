@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>fade_menu</title>
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+  <!--jQuery 소스삽입  cdnjs 플러그인 사용 -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+  <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
   <style>
   
     ul,li{
@@ -24,16 +27,29 @@
   
   </style>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
-  <!--jQuery 소스삽입  cdnjs 플러그인 사용 -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
-  <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
-
   <script>   
   
+	/* 
+  1. 모든 객체들의 투명도를 조절하고 시작
+  2. hover한 객체에만 투명도를 1로 조절
+  3. 이벤트가 중복 실행될 경우 제어할 방법 넣어주기
+  */
 	
-	
+    $(document).ready(function(){
+      let list = $('#img_list').children(); //이벤트 대상 설정
+      $(list).css({'opacity':'0.3'}); //기본값 설정
 
+      $(list).on('mouseenter',function(){
+        // $(this).not(':animated').fadeTo(500,1);
+        $(this).stop().fadeTo(500, 1);
+        // $(this).not(':animated').fadeTo(1000, 1);
+
+      })
+      $(list).on('mouseleave',function(){
+        $(this).stop().fadeTo(500, 0.3);
+       // $(this).not(':animated').fadeTo(500, 0.3);
+      })
+    })
 
 
   

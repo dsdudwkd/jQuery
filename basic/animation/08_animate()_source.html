@@ -1,66 +1,111 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>animate()</title>
-
-  <style>
-  
-    #wrap{
-      width:880px;
-      height:300px;
-      position:absolute; left:50%; margin-left:-440px; top:200px;      
-    }
-    
-    #panel{
-      width:100%; height:220px; 
-      border:1px #000000 solid; 		
-      margin-bottom:10px; 
-      position:absolute; left:0px; top:0px; 
-      
-    }
-		
-		#img_wrap{			
-			width:220px;
-			height:220px;						
-			position:absolute; left:0px; top:0px; 		
-    }	
-    
-    #start_btn{
-      position:absolute; bottom:20px; left:50%; margin-left:-20px; 
-    }
-  
-  
-  
-  </style>
-
-
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
   <!--jQuery 소스삽입  cdnjs 플러그인 사용 -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
   <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
+  <style>
+    #wrap {
+      width: 880px;
+      height: 300px;
+      position: absolute;
+      left: 50%;
+      margin-left: -440px;
+      top: 200px;
+    }
 
+    #panel {
+      width: 100%;
+      height: 220px;
+      border: 1px #000000 solid;
+      margin-bottom: 10px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
 
+    }
 
+    #img_wrap {
+      width: 220px;
+      height: 220px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+
+    #start_btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      margin-left: -20px;
+    }
+  </style>
+
+  <script>
+    /* 
+    animated()
+    여러가지 css 속성들을 이용해서 애니메이션 효과를 직접 커스텀 할 수 있는 애니메이션 메서드 (transform 속성은 적용되지 않음)
+
+    선택자.animate({'css속성1': '값1', 'css속성2': '값2',...}, 시간, easing(생략가능), 콜백함수)
+    */
+
+    $(document).ready(function(){
+      /* 
+      1. 버튼을 누르면 객체 이동함(현재 위치에서 wrap의 끝까지(width))
+      2. 이동하면서 동시에 투명도도 같이 적용
+      3. 애니메이션이 끝나면 처음 위치로 돌아옴
+      4. 이벤트가 실행될 때 추가로 이벤트를 실행하면 이벤트를 즉시 취소하고 해당 이벤트를 처음부터 즉시 실행하는
+
+      객체의 사이즈를 반환하는 메서드
+      width() = 선언된 값만 받아옴(여백은 포함하지 않음)
+      innerWidth() = width, padding값만 반환
+      outerWidth() = width, padding, border까지 반환
+      outerWidth(true) = width, padding, border, margin 까지 반환, 기본값은 false
+/      */
+     
+      let endX = $('#wrap').width() - $('#img_wrap').width();
+      // console.log($('#wrap').width());
+      // console.log($('#wrap').innerWidth());
+      // console.log($('#wrap').outerWidth());
+      // console.log($('#wrap').outerWidth(true));
+
+      $('#start_btn').on('click', ballMoving);
+      
+      function ballMoving(){
+        $('#img_wrap').css({'left': 0, 'opacity': 1}); //애니메이션 시작 시 처음 위치로 리셋
+
+        $('#img_wrap').stop().animate({'left':endX, 'opacity': 0}, 1000, function(){ 
+          //콜백함수는 애니메이션이 실행된 이후(완전히 종료된 이후)에 해당 코드를 실행하는 조건부 함수
+          $('#img_wrap').css({'left': 0, 'opacity': 1});
+        });
+      }
+    })
+  </script>
 
 </head>
+
 <body>
 
   <div id="wrap">
 
     <div id="panel">
 
-      <div id="img_wrap"> 
+      <div id="img_wrap">
         <img id="img_1" src="images/img1.jpg">
-      </div>    
+      </div>
 
     </div>
 
     <button id="start_btn">시작</button>
-     
+
   </div>
-  
+
 </body>
+
 </html>

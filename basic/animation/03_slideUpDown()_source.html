@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>slideUp()_slideDown()</title>
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+  <!--jQuery 소스삽입  cdnjs 플러그인 사용 -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+  <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
   <style>
   
   #wrap{
@@ -29,7 +32,31 @@
   
   </style>
 
+  <script>
+    $(document).ready(function(){
+      $('#hide_btn').on('click',function(){
+        
+        /* 
+        slideUp(), slideDown()
 
+        상단을 기준으로 객체를 나타나거나 사라지게 하는 애니메이션 메서드
+        show()와 hide()와 같이 최종적으로 display:none;이 된다
+        show()나 hide()와는 다르게 duration 기본값은 300ms의 값을 가지고 있으며, 값을 입력하면 속도가 바뀌게 된다
+
+        slideToggle()은 방향을 지정할 수 없으며 항상 아래에서 위로 방향이 정해져 있다
+        그 외의 방향을 지정할 때에는 직접 커스텀 애니메이션으로 작성해야 한다
+        */
+        $('#img_wrap').slideUp(500);
+      })
+      $('#show_btn').on('click', function(){
+        $('#img_wrap').slideDown(500);
+      })
+
+      $('#toggle_btn').on('click', function(){
+        $('#img_wrap').slideToggle();
+      })
+    })
+  </script>
 
 </head>
 <body>

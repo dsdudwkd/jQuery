@@ -14,7 +14,50 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
   <!--jQuery-ui 소스삽입 (aniamtion 기능, 다양한 ui component)  cdnjs 플러그인 사용 -->
 
+  <script>
+    /* 
+    1. hover한 메인 메뉴의 서브메뉴만 slideDown()으로 내려오게 하기
+    2. b배경도 서브메뉴와 함께 올라가고 내려가야 함
 
+    애니메이션이 실행하는 시간보다 이벤트를 실행하는 시간이 더 빠를 경우
+    이벤트가 누적되어서 예약하게 되므로 계속 실행을 하게 된다
+
+    1. 이벤트가 실행될 때 다른 이벤트가 들어올 경우
+    - 현재 실행되는 이벤트를 즉시 종료하고 현재 들어온 이벤트를 우선으로 실행하는 로직 = 선택자.stop().이벤트메서드()
+    - 이벤트가 실행되는 도중에는 다른 이벤트를 예약받지 않게하는 로직 = 선택자.not(':animated').이벤트메서드()
+
+    ("#sub_bg:not(:animated)") -  선택자에 직접적으로 적용하는 방식
+    변수명.not(':animated')는 변수명에 적용하는 방식
+    */
+    $(document).ready(function(){
+      let mainMenu = $('#mainmenu_list').children();
+      let submenu = $('.submenu_list');
+      let sub_bg = $('#sub_bg');
+
+      submenu.hide();
+      sub_bg.css({'display':'none'});
+
+      $(mainMenu).on('mouseenter',function(){
+        // submenu.stop().slideUp(500); //리셋은 맨 위에서 실행하는게 좋다
+        submenu.not(':animated').slideUp(500);
+        sub_bg.slideDown(500);
+        
+        // $(this).children().stop().slideDown(500); 
+        /* 
+        $(this).children().stop()
+        $(this).children().slideDown(500)
+        위의 구문은 이 의미와 같다
+        */
+        $(this).children().not(':animated').slideDown(500);
+      })
+
+      $('#header_wrap').on('mouseleave',function(){
+        // submenu.stop().slideUp(500);
+        sub_bg.slideUp(500);
+        submenu.not(':animated').slideUP(500);
+      })
+    })
+  </script>
 
 
 </head>
