@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jQuery script cdn -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous">
+    </script>
+    <!-- swiper script cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- swiper css cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+        .container{
+            width: 100%;
+            height: 875px;
+            position: relative;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        img{
+            display: block;
+            object-fit: cover;
+        }
+        /* 
+        swiper 라이브러리에 swiper-slide-active나 swiper-slide-next, swiper-slide-prev 같은 클래스가 설정되어 있어서
+        현재 보고 있는 슬라이드 페이지는 swiper-slide-active, 현재 페이지의 전 후 슬라이드는 swiper-slide-next, swiper-slide-prev로 되어 있다
+        그래서 애니메이션 같은 이벤트를 구분해서 적용시킬 수 있다
+        */
+        .swiper-slide-active img{
+            animation: img-ani 5s;
+        }
+        @keyframes img-ani{
+            0%{
+                transform: scale(1.3);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        .mask{
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .mask.one{
+            left: 0;
+        }
+        .mask.two{
+            left: 25%;
+        }
+        .mask.three{
+            left: 50%;
+        }
+        .mask.four{
+            left: 75%;
+        }
+        @keyframes mask_ani{
+            0%{
+                width: 100%;
+                background-color: #333333;
+            }
+            100%{
+                width: 1px;
+                background-color: #333333;
+            }
+        }
+        .swiper-slide-active .mask {
+            animation: mask_ani;
+        }
+        .swiper-slide-active .mask.one{
+            animation: mask_ani 0.5s;
+        }
+        .swiper-slide-active .mask.two{
+            animation: mask_ani 0.75s;
+        }
+        .swiper-slide-active .mask.three{
+            animation: mask_ani 1s;
+        }
+        .swiper-slide-active .mask.four{
+            animation: mask_ani 1.25s;
+        }
+
+        .swiper-slide-active:after{
+            content: "";
+            display: block;
+            background: rgb(56, 179, 228);
+            width: 100%;
+            height: 5px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            animation: bar_ani 5s linear;
+        }
+        @keyframes bar_ani{
+            0%{
+                width: 0;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+        
+        /* btns */
+        .btns{
+            width: 160px;
+            height: 60px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.5s;
+            background: transparent;
+        }
+        .btns:before{
+            content: "";
+            width: 100px;
+            height: 2px;
+            display: block;
+            background-color: #ffffff;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+        }
+        .btns:after{
+            content: "";
+            width: 0;
+            height: 100%;
+            position:absolute;
+            top: 0;
+            background-color: #ffffff;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        /* swiper button custom */
+        .swiper-button-prev{
+            justify-content: end;
+            left: 0;
+        }
+        .swiper-button-next{
+            justify-content: start;
+            right: 0;
+        }
+        .swiper-button-prev:before,
+        .swiper-button-prev:after{
+            left: 0;
+        }
+        .swiper-button-next:before,
+        .swiper-button-next:after{
+            right: 0;
+        }
+        
+        /* btn hover */
+        .btns:hover{
+            color: #333333;
+        }
+        .btns:hover:before{
+            background-color: cyan;
+        }
+        .btns:hover:after{
+            width: 120%;
+        }
+        
+        /* pagination */
+        .swiper-pagination{
+            bottom: 150px !important;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            height: 50px;
+        }
+        .swiper-pagination-bullet{
+            width: 3px;
+            height: 20px;
+            transition: 0.5s;
+            border-radius: 0;
+            opacity: 1;
+            background-color: #ffffff;
+        }
+        .swiper-pagination-bullet-active{
+            height: 30px;
+            background: skyblue;
+        }
+    </style>
+    <script>
+        /* 
+        대방산업개발 사이트
+        1. swiper로 기본 슬라이드 구현
+        2. 활성화된 슬라이더에 이미지 확대 모션 구현
+        3. 활성화된 슬라이더에 4분할의 검은색 박스로 가려졌다가 사라지게 하기
+        4. 양쪽 끝에 버튼 커스텀
+        5. 도트 커스텀
+        6. progressbar 구현
+        */
+        $(document).ready(function(){
+            const slider = new Swiper('.container', {
+                slidePerView : 'auto',
+                loop : true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation:{
+                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next'
+                },
+                allowTouchMove : false,
+                autoplay: {
+                    delay: 0,
+                },
+                speed: 5000,
+                effect: 'creative',
+                creativeEffect:{
+                    prev: { //슬라이드 장면의 prev
+                        opacity: 0
+                    },
+                    next: {
+                        opacity: 1
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <section class="container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide item1">
+                <img src="./images/visual1.png" alt="">
+                <div class="mask one"></div>
+                <div class="mask two"></div>
+                <div class="mask three"></div>
+                <div class="mask four"></div>
+            </div>
+            <div class="swiper-slide item2">
+                <img src="./images/visual2.png" alt="">
+                <div class="mask one"></div>
+                <div class="mask two"></div>
+                <div class="mask three"></div>
+                <div class="mask four"></div>
+            </div>
+            <div class="swiper-slide item3">
+                <img src="./images/visual3.png" alt="">
+                <div class="mask one"></div>
+                <div class="mask two"></div>
+                <div class="mask three"></div>
+                <div class="mask four"></div>
+            </div>
+        </div>
+        <div class="swiper-button-next btns">NEXT</div>
+        <div class="swiper-button-prev btns">PREV</div>
+
+        <div class="swiper-pagination"></div>
+    </section>
+</body>
+</html>
